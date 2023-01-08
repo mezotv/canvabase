@@ -16,5 +16,8 @@
     "discord-canva"
   ],
   "author": "Dominik",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.32"
+  }
 }

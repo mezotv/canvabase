@@ -1,6 +1,6 @@
 const canvas = require("@napi-rs/canvas");
 
-const getMiddleColor = async (imagePath) => {
+async function getSpotifyColor(imagePath) {
 
     const canvasObject = canvas.createCanvas(640, 640);
     const ctx = canvasObject.getContext('2d');
@@ -23,12 +23,8 @@ const getMiddleColor = async (imagePath) => {
     const g2 = data2[1];
     const b2 = data2[2];
     let color2 = `#${r2.toString(16).padStart(2, '0')}${g2.toString(16).padStart(2, '0')}${b2.toString(16).padStart(2, '0')}`;
-
-
-   if(isLight(color)) { color = "#0F0F0F" }
-   if(isLight(color2)) { color2 = "#0F0F0F" }
    
     return [color, color2];
 }
 
-export default getMiddleColor;
+module.exports =  {getSpotifyColor};
