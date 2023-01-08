@@ -1,9 +1,10 @@
-const Canvas = require("./src/Canvacord");
+const Canva = require("./src/Canva");
 
 module.exports = {
-    Canvas: Canvas,
+    Canvas: Canva,
     Canva,
     Spotify: require('./src/plugins/Spotify'),
+    write: Canva.write,
     author: require("./package.json").author,
     version: require("./package.json").version
 };

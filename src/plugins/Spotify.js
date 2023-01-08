@@ -50,19 +50,17 @@ class Spotify {
     if (typeof this.albumArt !== "string") {
       throw new TypeError("Spotify Album Art needs to be a string!");
     }
+  }
 
-    // add a tiny async function
+    async build() {
 
-    this.generate = async () => {
-
-    console.log(albumArt)
+    const { song, artist, album, duration, albumArt } = this;
 
     const color = await getSpotifyColor(albumArt)
 
     if(isLight(color[0])) { color[0] = "#0F0F0F" }
     if(isLight(color[1])) { color[1] = "#0F0F0F" }
 
-    console.log(color)
     canvas.GlobalFonts.registerFromPath(join(__dirname, '..', '/', 'fonts', 'AvenirNextLTPro-Bold.otf'), 'FontBold')
     canvas.GlobalFonts.registerFromPath(join(__dirname, '..', '/', 'fonts', 'AvenirNextLTPro-Regular.otf'), 'FontRegular')
     const canvasObject = canvas.createCanvas(428, 926);
@@ -78,7 +76,7 @@ class Spotify {
 
     // draw the album art image onto the canvas
 
-    const logo = canvas.loadImage(albumArt);
+    const logo = await canvas.loadImage(albumArt);
     ctx.drawImage(logo, 26, 160, 380, 380);
 
     ctx.font = '14px FontBold'
@@ -117,18 +115,12 @@ class Spotify {
     ctx.textBaseline = "top"; // align the text to the top of the canvas
     ctx.fillText("0:00", 20, 694)
 
-    const image = canvas.loadImage("https://cdn.discordapp.com/attachments/1047187283234795580/1053677610367975624/Track_View.png");
+    const image = await canvas.loadImage("https://cdn.discordapp.com/attachments/1047187283234795580/1053677610367975624/Track_View.png");
     ctx.drawImage(image, 0, 0, 428, 926);
-    }
-    this.generate()
+
+    // returns the buffer
+    return canvasObject.encode("png");
   }
 }
 
-
-
-
-const spotify = new Spotify("albumart", "song", "song", 12999, "https://cdn.discordapp.com/attachments/1007751044463345784/1053673397319630878/spotify-card.png");
-
-    module.exports = Spotify;
-
-console.log(spotify);
+module.exports = Spotify;
