@@ -1,60 +1,59 @@
 const { isLight } = require("../functions/isLight");
 const { getSpotifyColor } = require("../functions/fetchSpotifyColor");
 const canvas = require("@napi-rs/canvas");
-const { join } = require('path')
+const { join } = require('path');
 
 class Spotify {
-  constructor(song, artist, album, duration, albumArt) {
-    this.song = song;
-    this.artist = artist;
-    this.album = album;
-    this.duration = duration;
-    this.albumArt = albumArt;
-
-    if (typeof this.song === "undefined" || this.song === null) {
-      throw new Error("Spotify Song can not be an undefined or null!");
-    }
-
-    if (typeof this.song !== "string") {
-      throw new TypeError("Spotify Song needs to be a string!");
-    }
-
-    if (typeof this.artist === "undefined" || this.artist === null) {
-      throw new Error("Spotify Artist can not be an undefined or null!");
-    }
-
-    if (typeof this.artist !== "string") {
-      throw new TypeError("Spotify Artist needs to be a string!");
-    }
-
-    if (typeof this.album === "undefined" || this.album === null) {
-      throw new Error("Spotify Album can not be an undefined or null!");
-    }
-
-    if (typeof this.album !== "string") {
-      throw new TypeError("Spotify Album needs to be a string!");
-    }
-
-    if (typeof this.duration === "undefined" || this.duration === null) {
-      throw new Error("Spotify Song can not be an undefined or null!");
-    }
-
-    if (typeof this.duration !== "number") {
-      throw new TypeError("Spotify Song needs to be a number!");
-    }
-
-    if (typeof this.albumArt === "undefined" || this.albumArt === null) {
-      throw new Error("Spotify Album Art can not be an undefined or null!");
-    }
-
-    if (typeof this.albumArt !== "string") {
-      throw new TypeError("Spotify Album Art needs to be a string!");
-    }
+  constructor() {
   }
+
+  setSong(song) {
+    if (!song || typeof song !== "string") {
+      throw new Error("Expected song string instead got " + typeof song);
+    }
+    this.song = song
+    return this;
+  }
+
+  setArtist(artist) {
+    if (!artist || typeof artist !== "string") {
+      throw new Error("Expected artist string instead got " + typeof artist);
+    }
+    this.artist = artist
+    return this;
+  }
+  setAlbum(album) {
+    if (!album || typeof album !== "string") {
+      throw new Error("Expected album string instead got " + typeof album);
+    }
+    this.album = album
+    return this;
+  }
+  setDuration(duration) {
+    if (!duration || typeof duration !== "number") {
+      throw new Error("Expected duration number instead got " + typeof duration);
+    }
+    this.duration = duration
+    return this;
+  }
+  setCover(albumArt) {
+    if (!albumArt || typeof albumArt !== "string") {
+      throw new Error("Expected albumArt string instead got " + typeof albumArt);
+    }
+    this.albumArt = albumArt
+    return this;
+  }
+
 
     async build() {
 
     const { song, artist, album, duration, albumArt } = this;
+
+    if(!song) throw new Error("No song provided in options.")
+    if(!artist) throw new Error("No artist provided in options.")
+    if(!album) throw new Error("No album provided in options.")
+    if(!duration) throw new Error("No duration provided in options.")
+    if(!albumArt) throw new Error("No cover provided in options.")
 
     const color = await getSpotifyColor(albumArt)
 

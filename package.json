@@ -18,6 +18,7 @@
   "author": "Dominik",
   "license": "MIT",
   "dependencies": {
-    "@napi-rs/canvas": "0.1.30"
+    "@napi-rs/canvas": "0.1.30",
+    "jimp": "^0.16.2"
   }
 }
