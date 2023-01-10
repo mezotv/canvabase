@@ -12,11 +12,3 @@ const spotify = new canvabase.Spotify()
 spotify.build().then((img) => {
   canvabase.write("./test/spotifycard.png", img);
 });
-
-const welcomer = new canvabase.Welcomer()
-  .setName("Napi")
-  .addBackground("https://i.scdn.co/image/ab67616d0000b27370dbc9f47669d120ad874ec1");
-
-welcomer.build().then((img) => {
-  canvabase.write("./test/welcomercard.png", img);
-})
