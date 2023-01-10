@@ -1,6 +1,6 @@
-const canva = require("../index");
+const canvabase = require("../index");
 
-const spotify = new canva.Spotify()
+const spotify = new canvabase.Spotify()
   .setSong("Kill Bill")
   .setArtist("SZA")
   .setAlbum("SOS")
@@ -10,13 +10,13 @@ const spotify = new canva.Spotify()
   );
 
 spotify.build().then((img) => {
-  canva.write("./test/spotifycard.png", img);
+  canvabase.write("./test/spotifycard.png", img);
 });
 
-const welcomer = new canva.Welcomer()
+const welcomer = new canvabase.Welcomer()
   .setName("Napi")
   .addBackground("https://i.scdn.co/image/ab67616d0000b27370dbc9f47669d120ad874ec1");
 
 welcomer.build().then((img) => {
-  canva.write("./test/welcomercard.png", img);
+  canvabase.write("./test/welcomercard.png", img);
 })

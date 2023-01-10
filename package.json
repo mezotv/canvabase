@@ -1,8 +1,8 @@
 {
-  "name": "canva",
-  "version": "1.0.0",
-  "description": "a simple canva package",
-  "main": "src/index.js",
+  "name": "canvabase",
+  "version": "0.0.1",
+  "description": "An easy to use yet powerful image manipulation library.",
+  "main": "index.js",
   "directories": {
     "test": "test"
   },
@@ -13,12 +13,12 @@
     "discord",
     "canva",
     "canvas",
-    "discord-canva"
+    "discord-canva",
+    "canvabase"
   ],
-  "author": "Dominik",
+  "author": "Dominik K.",
   "license": "MIT",
   "dependencies": {
-    "@napi-rs/canvas": "0.1.30",
-    "jimp": "^0.16.2"
+    "@napi-rs/canvas": "0.1.30"
   }
 }

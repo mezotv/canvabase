@@ -1,11 +1,11 @@
-const Canva = require("./src/Canva");
+const Canvabase = require("./src/Canvabase");
 
 module.exports = {
-    Canvas: Canva,
-    Canva,
+    Canvas: Canvabase,
+    Canvabase,
     Spotify: require('./src/plugins/Spotify'),
     Welcomer: require('./src/plugins/Welcomer'),
-    write: Canva.write,
+    write: Canvabase.write,
     author: require("./package.json").author,
     version: require("./package.json").version
 };
