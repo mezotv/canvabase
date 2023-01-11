@@ -3,9 +3,31 @@ const { getSpotifyColor } = require("../functions/fetchSpotifyColor");
 const canvas = require("@napi-rs/canvas");
 const { join } = require('path');
 
+
+/**
+ * @example 
+ * const spotify = new canvabase.Spotify()
+      .setSong("Kill Bill")
+      .setArtist("SZA")
+      .setAlbum("SOS")
+      .setDuration(153946)
+      .setCover(
+        "https://i.scdn.co/image/ab67616d0000b27370dbc9f47669d120ad874ec1"
+      );
+
+    spotify.build().then((img) => {
+      canvabase.write("./test/spotifycard.png", img);
+  });
+ */
 class Spotify {
   constructor() {
   }
+
+  /**
+   * 
+   * @param {String} song 
+   * @returns {Spotify}
+   */
 
   setSong(song) {
     if (!song || typeof song !== "string") {
@@ -15,6 +37,12 @@ class Spotify {
     return this;
   }
 
+  /**
+   * 
+   * @param {String} artist 
+   * @returns {Spotify}
+   */
+
   setArtist(artist) {
     if (!artist || typeof artist !== "string") {
       throw new Error("Expected artist string instead got " + typeof artist);
@@ -22,6 +50,13 @@ class Spotify {
     this.artist = artist
     return this;
   }
+
+    /**
+   * 
+   * @param {String} albumn 
+   * @returns {Spotify}
+   */
+
   setAlbum(album) {
     if (!album || typeof album !== "string") {
       throw new Error("Expected album string instead got " + typeof album);
@@ -29,6 +64,13 @@ class Spotify {
     this.album = album
     return this;
   }
+
+    /**
+   * 
+   * @param {Number} duration 
+   * @returns {Spotify}
+   */
+
   setDuration(duration) {
     if (!duration || typeof duration !== "number") {
       throw new Error("Expected duration number instead got " + typeof duration);
@@ -36,6 +78,13 @@ class Spotify {
     this.duration = duration
     return this;
   }
+
+    /**
+   * 
+   * @param {String} albumArt 
+   * @returns {Spotify}
+   */
+
   setCover(albumArt) {
     if (!albumArt || typeof albumArt !== "string") {
       throw new Error("Expected albumArt string instead got " + typeof albumArt);
@@ -44,6 +93,11 @@ class Spotify {
     return this;
   }
 
+
+    /**
+     * This function builds the canvas
+     * @returns {Promise<Buffer>}
+     */
 
     async build() {
 
