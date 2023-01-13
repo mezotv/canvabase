@@ -7,8 +7,8 @@ class Welcomer {
     this.color = "#FFFFFF"
 }
   addBackground(background) {
-    if (!background || typeof background !== "string") {
-      throw new Error("Expected background string instead got " + typeof background);
+    if (!background || typeof background !== "object") {
+      throw new Error("Expected background object instead got " + typeof background);
     }
     this.background = background
     return this;
@@ -45,6 +45,9 @@ setcolor(color) {
     if(!background) throw new Error("No background provided in options.")
     if(!avatar) throw new Error("No avatar provided in options.")
     if(!name) throw new Error("No name provided in options.")
+
+
+    background = background[Math.floor(Math.random() * background.length)] 
 
     const fetchColor = await getColor(background)
     console.log(fetchColor)
