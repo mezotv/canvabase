@@ -22,6 +22,14 @@ class Welcomer {
     return this;
 }
 
+setTitle(title) {
+  if (!title || typeof title !== "string") {
+    throw new Error("Expected title string instead got " + typeof title);
+  }
+  this.title = title
+  return this;
+}
+
 setAvatar(avatar) {
   if (!avatar || typeof avatar !== "string") {
     throw new Error("Expected avatar string instead got " + typeof avatar);
@@ -40,11 +48,13 @@ setcolor(color) {
 
     async build() {
 
-    let { background, name, color, avatar} = this;
+    let { background, name, color, avatar, title} = this;
 
     if(!background) throw new Error("No background provided in options.")
     if(!avatar) throw new Error("No avatar provided in options.")
     if(!name) throw new Error("No name provided in options.")
+
+    if(!title) { title = "Welcome!"}
 
 
     background = background[Math.floor(Math.random() * background.length)] 
@@ -112,8 +122,7 @@ setcolor(color) {
     ctx.font = `bold 40px Life`;
     ctx.fillStyle = `${color}`;
 
-    console.log(avatar)
-    ctx.fillText(`${username}`, canvas.width / 2.5, canvas.height / 1.8);
+    ctx.fillText(`${title}`,  canvas.width / 2.5, 179);
 
     const renderavatar = await canva.loadImage(avatar)
     ctx.shadowBlur = 10;
