@@ -19,6 +19,7 @@ const { join } = require('path');
       canvabase.write("./test/spotifycard.png", img);
   });
  */
+
 class Spotify {
   constructor() {
   }

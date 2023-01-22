@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/Index.js"
+    "test": "node test/Index.js",
+    "generate-docs": "jsdoc --configure jsdoc.json --verbose"
   },
   "keywords": [
     "discord",
@@ -20,5 +21,8 @@
   "license": "MIT",
   "dependencies": {
     "@napi-rs/canvas": "0.1.30"
+  },
+  "devDependencies": {
+    "clean-jsdoc-theme": "^4.1.10"
   }
 }

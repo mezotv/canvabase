@@ -15,6 +15,7 @@ spotify.build().then((img) => {
 
 const welcomer = new canvabase.Welcomer()
   .setName("Napi")
+  .setTitle("Welcome!")
   .addBackground(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
   .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512")
 
