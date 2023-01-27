@@ -6,7 +6,7 @@ const canva = require("@napi-rs/canvas");
 /**
  * @example 
  * const welcomer = new canvabase.Welcomer()
-  .setName("Napi")
+  .setName("Dominik")
   .setTitle("Welcome!")
   .addBackground(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
   .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512")
@@ -20,13 +20,26 @@ class Welcomer {
   constructor() {
     this.color = "#FFFFFF"
   }
+
+  /**
+   * 
+   * @param {Array} background 
+   * @returns {Welcomer}
+   */
+
   addBackground(background) {
-    if (!background || typeof background !== "object") {
-      throw new Error("Expected background object instead got " + typeof background);
+    if (!Array.isArray(background)) {
+      throw new Error("Expected background array instead got " + typeof background);
     }
     this.background = background
     return this;
   }
+
+  /**
+   * 
+   * @param {Array} name 
+   * @returns {Welcomer}
+   */
 
   setName(name) {
     if (!name || typeof name !== "string") {
@@ -36,6 +49,12 @@ class Welcomer {
     return this;
   }
 
+  /**
+   * 
+   * @param {Array} title 
+   * @returns {Welcomer}
+   */
+
   setTitle(title) {
     if (!title || typeof title !== "string") {
       throw new Error("Expected title string instead got " + typeof title);
@@ -43,6 +62,12 @@ class Welcomer {
     this.title = title
     return this;
   }
+
+  /**
+   * 
+   * @param {String} avatar 
+   * @returns {Welcomer}
+   */
 
   setAvatar(avatar) {
     if (!avatar || typeof avatar !== "string") {
@@ -52,6 +77,12 @@ class Welcomer {
     return this;
   }
 
+  /**
+   * 
+   * @param {String} color 
+   * @returns {Welcomer}
+   */
+
   setcolor(color) {
     if (!color || typeof color !== "string") {
       throw new Error("Expected color string instead got " + typeof color);
@@ -59,6 +90,11 @@ class Welcomer {
     this.color = color
     return this;
   }
+
+    /**
+     * This function builds the canvas
+     * @returns {Promise<Buffer>}
+     */
 
   async build() {
 
@@ -131,10 +167,10 @@ class Welcomer {
     ctx.textAlign = "start";
 
     const username =
-      name.length > 15 ? text.substring(0, 15).trim() + "..." : name;
+      name.length > 15 ? name.substring(0, 15).trim() + "..." : name;
 
     const textWidth = ctx.measureText(username).width;
-    const x = canvas.width / 2 - textWidth / 2;
+    const x = canvas.width / 2 - textWidth / 2 + 65;
     const y = 190
 
     ctx.fillText(`${username}`, x, y);
@@ -144,7 +180,7 @@ class Welcomer {
     ctx.shadowBlur = 15;
 
     const textWidth1 = ctx.measureText(title).width;
-    const x1 = canvas.width / 2 - textWidth1 / 2;
+    const x1 = canvas.width / 2 - textWidth1 / 2 + 65;
     const y1 = 130
 
     ctx.fillText(title, x1, y1);
@@ -185,7 +221,7 @@ class Welcomer {
     }
 
 
-    // returns the buffer
+    // returns the buffer UwU
     return canvas.encode("png");
   }
 }

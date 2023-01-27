@@ -8,7 +8,7 @@
     "opts": {
       "encoding": "utf8",
       "readme": "./README.md",
-      "destination": "src/docs/",
+      "destination": "./docs",
       "recurse": true,
       "verbose": true,
       "template": "./node_modules/clean-jsdoc-theme",

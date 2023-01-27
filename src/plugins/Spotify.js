@@ -172,7 +172,7 @@ class Spotify {
     const image = await canvas.loadImage("https://cdn.discordapp.com/attachments/1047187283234795580/1053677610367975624/Track_View.png");
     ctx.drawImage(image, 0, 0, 428, 926);
 
-    // returns the buffer
+    // returns the buffer Ara Ara
     return canvasObject.encode("png");
   }
 }
