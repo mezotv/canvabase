@@ -1,13 +1,13 @@
 {
   "name": "canvabase",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An easy to use yet powerful image manipulation library.",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "typings": "./typings/index.d.ts",
   "scripts": {
-    "test": "node test/index.js"
+    "test": "node test/Index.js",
+    "generate-docs": "jsdoc --configure jsdoc.json --verbose",
+    "generate-typings": "tsc"
   },
   "keywords": [
     "discord",
@@ -20,5 +20,13 @@
   "license": "MIT",
   "dependencies": {
     "@napi-rs/canvas": "0.1.30"
+  },
+  "engines": {
+    "node": ">=16.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "clean-jsdoc-theme": "^4.1.10",
+    "typescript": "^4.9.4"
   }
 }

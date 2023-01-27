@@ -1,0 +1,47 @@
+{
+    "source": {
+      "include": ["src", "package.json", "README.md"],
+      "includePattern": ".js$",
+      "excludePattern": "(node_modules/|docs)"
+    },
+    "plugins": ["plugins/markdown"],
+    "opts": {
+      "encoding": "utf8",
+      "readme": "./README.md",
+      "destination": "./docs",
+      "recurse": true,
+      "verbose": true,
+      "template": "./node_modules/clean-jsdoc-theme",
+      "theme_opts": {
+        "meta": [
+          {
+            "name": "author",
+            "content": "canvabase"
+          },
+          {
+            "name": "description",
+            "content": "An easy to use yet powerful image manipulation library."
+          }
+        ],
+        "menu": [
+          {
+            "title": "Github",
+            "link": "https://github.com/mezotv/canvabase",
+            "target": "_blank"
+          },
+          {
+            "title": "Discord Server",
+            "link": "http://discord.gg/vMyXAxEznS",
+            "target": "_blank"
+          }
+        ],
+        "homepageTitle": "Canvabase",
+        "default_theme": "dark"
+      }
+    },
+    "markdown": {
+      "hardwrap": false,
+      "idInHeadings": true
+    }
+  }
+  
