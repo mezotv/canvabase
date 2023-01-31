@@ -3,6 +3,7 @@ const path = require("node:path");
 
 class AssetLoader {
   assetDirs = [ "./assets" ];
+  // TODO: caching
 
   constructor(...sourceDirectories) {
     if (sourceDirectories.length != 0) this.assetDirs = sourceDirectories;
@@ -20,7 +21,7 @@ class AssetLoader {
 
           if (!parentObj[currDirName]) parentObj[currDirName] = {
             assetMap: new Map(),
-            get: function(path) {
+            getPath: function(path) {
               if (path.includes("/")) {
                 let dirs = path.split("/");
                 let getProp = (ds, o=this) => {
@@ -31,9 +32,15 @@ class AssetLoader {
                     return getProp(ds, o[d]);
                   }
                 }
-                return getProp(dirs.slice(0, dirs.length - 1)).get(dirs[dirs.length - 1]);
+                return getProp(dirs.slice(0, dirs.length - 1)).getPath(dirs[dirs.length - 1]);
               }
               return this.assetMap.get(path);
+            },
+            get: function(path) {
+              let fp = this.getPath(path);
+              if (!fp) return null;
+              console.log(fp);
+              return fs.readFileSync(fp);
             }
           };
 
@@ -53,14 +60,13 @@ class AssetLoader {
               continue;
             }
             let name = path.basename(file);
-            parentObj[currDirName].assetMap.set(name, directory + "/file");
+            parentObj[currDirName].assetMap.set(name, directory + "/" + file);
           }
           r(parentObj[currDirName]);
         });
       }
       let dirs = [];
       this.assetDirs.forEach(d => {
-        //console.log(d, this);
         dirs.push(mapDirectories(d));
       });
       await Promise.allSettled(dirs);
@@ -78,10 +84,10 @@ class AssetLoader {
   }
 }
 
-const loader = new AssetLoader();
+/*const loader = new AssetLoader();
 (async () => {
-  await loader.load();
+  await loader.load(); // gotta call this only once
   console.log(loader.images.get("Spotify/Overlay.png"));
-})();
+})();*/
 
 module.exports = AssetLoader;
