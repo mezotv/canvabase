@@ -29,10 +29,14 @@ class AssetLoader {
             let file = files[i];
             let ext = path.extname(file);
             if (!ext) {
-              let obj = (topLevel) ? parentObj : parentObj[currDirName];
-              let mapped = await mapDirectories(directory + "/" + file, obj, file);
+              let obj = parentObj[currDirName];
+              await mapDirectories(directory + "/" + file, obj, file);
               if (topLevel) {
-                parentObj[currDirName][file] = mapped;
+                Object.defineProperty(parentObj, file, {
+                  get: () => {
+                    return parentObj[currDirName][file];
+                  }
+                });
               }
               continue;
             }
