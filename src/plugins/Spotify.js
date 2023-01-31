@@ -169,7 +169,7 @@ class Spotify {
     ctx.textBaseline = "top"; // align the text to the top of the canvas
     ctx.fillText("0:00", 20, 694)
 
-    const image = await canvas.loadImage("https://cdn.discordapp.com/attachments/1047187283234795580/1053677610367975624/Track_View.png");
+    const image = await canvas.loadImage("https://cdn.discordapp.com/attachments/1047187283234795580/1070006128349544458/Overlay.png");
     ctx.drawImage(image, 0, 0, 428, 926);
 
     // returns the buffer Ara Ara
