@@ -87,7 +87,10 @@ class AssetLoader {
 /*const loader = new AssetLoader();
 (async () => {
   await loader.load(); // gotta call this only once
-  console.log(loader.images.get("Spotify/Overlay.png"));
+  console.log(loader.images.get("Spotify/Overlay.png")); // same as the following examples
+  console.log(loader.images.Spotify.get("Overlay.png"));
+  console.log(loader.all.images.get("Spotify/Overlay.png"));
+  console.log(loader.all.get("images/Spotify/Overlay.png"));
 })();*/
 
 module.exports = AssetLoader;
