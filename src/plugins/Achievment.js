@@ -20,7 +20,7 @@ const { join } = require('path');
   });
  */
 
-class Spotify {
+class Achievment {
   constructor() {
   }
 
@@ -115,8 +115,8 @@ class Spotify {
     if(isLight(color[0])) { color[0] = "#0F0F0F" }
     if(isLight(color[1])) { color[1] = "#0F0F0F" }
 
-    canvas.GlobalFonts.registerFromPath(join(__dirname, '..', '/', 'assets', '/', 'fonts', 'AvenirNextLTPro-Bold.otf'), 'FontBold')
-    canvas.GlobalFonts.registerFromPath(join(__dirname, '..', '/', 'assets', '/', 'fonts', 'AvenirNextLTPro-Regular.otf'), 'FontRegular')
+    canvas.GlobalFonts.registerFromPath(join(__dirname, '..', '/', 'fonts', 'AvenirNextLTPro-Bold.otf'), 'FontBold')
+    canvas.GlobalFonts.registerFromPath(join(__dirname, '..', '/', 'fonts', 'AvenirNextLTPro-Regular.otf'), 'FontRegular')
     const canvasObject = canvas.createCanvas(428, 926);
     const ctx = canvasObject.getContext('2d');
 
