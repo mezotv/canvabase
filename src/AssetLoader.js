@@ -20,8 +20,20 @@ class AssetLoader {
 
           if (!parentObj[currDirName]) parentObj[currDirName] = {
             assetMap: new Map(),
-            get: function() {
-              console.log(this.assetMap);
+            get: function(path) {
+              if (path.includes("/")) {
+                let dirs = path.split("/");
+                let getProp = (ds, o=this) => {
+                  if (ds.length == 1) {
+                    return o[ds[0]];
+                  } else {
+                    let d = ds.shift();
+                    return getProp(ds, o[d]);
+                  }
+                }
+                return getProp(dirs.slice(0, dirs.length - 1)).get(dirs[dirs.length - 1]);
+              }
+              return this.assetMap.get(path);
             }
           };
 
@@ -69,7 +81,7 @@ class AssetLoader {
 const loader = new AssetLoader();
 (async () => {
   await loader.load();
-  loader.all.images.Achievment.get();
+  console.log(loader.images.get("Spotify/Overlay.png"));
 })();
 
 module.exports = AssetLoader;
