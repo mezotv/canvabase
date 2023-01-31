@@ -1,38 +1,55 @@
-const fs = require("fs");
+const fs = require("node:fs");
+const path = require("node:path");
 
 class AssetLoader {
-  assetDirs = [ "./assets/" ];
-  types = [ "image", "font", "text" ]
-  classifications = {
-    "png": 0,
-    "otf": 1,
-    "txt": 2
-  }
-  extensionRegex = /\.(?:.(?!\.))+$/i;
-  nameRegex = /^[^.]*/;
+  assetDirs = [ "./assets" ];
 
   constructor(...sourceDirectories) {
     if (sourceDirectories.length != 0) this.assetDirs = sourceDirectories;
   }
   load() {
     return new Promise(async res => {
+      var mapDirectories = (directory, parentObj=this, currDirName=null) => {
+        return new Promise(async r => {
+          var files = (await this.readDir(directory)).flat(1);
+          var topLevel = false;
+          if (!currDirName) {
+            currDirName = "all";
+            topLevel = true;
+          }
+
+          if (!parentObj[currDirName]) parentObj[currDirName] = {
+            assetMap: new Map(),
+            get: function() {
+              console.log(this.assetMap);
+            }
+          };
+
+          for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            let ext = path.extname(file);
+            if (!ext) {
+              let obj = (topLevel) ? parentObj : parentObj[currDirName];
+              let mapped = await mapDirectories(directory + "/" + file, obj, file);
+              if (topLevel) {
+                parentObj[currDirName][file] = mapped;
+              }
+              continue;
+            }
+            let name = path.basename(file);
+            parentObj[currDirName].assetMap.set(name, directory + "/file");
+          }
+          r(parentObj[currDirName]);
+        });
+      }
       let dirs = [];
       this.assetDirs.forEach(d => {
-        console.log(d);
-        dirs.push(this.readDir(d));
+        //console.log(d, this);
+        dirs.push(mapDirectories(d));
       });
-      var files = await Promise.allSettled(dirs);
-      files = files.filter(e => e.status == "fulfilled").map(e => e.value).flat(1);
+      await Promise.allSettled(dirs);
 
-      files.forEach(file => {
-        /*let ext = file.match(this.extensionRegex)[0].slice(1)
-        let name = file.match(this.nameRegex)[0];
-        let type = this.types[this.classifications[ext]];
-        if (this[type]) return;
-        console.log(type);*/
-      })
-
-      console.log("files", files);
+      res(this);
     });
   }
   readDir(directory) {
@@ -46,6 +63,9 @@ class AssetLoader {
 }
 
 const loader = new AssetLoader();
-loader.load();
+(async () => {
+  await loader.load();
+  loader.all.images.Achievment.get();
+})();
 
 module.exports = AssetLoader;
