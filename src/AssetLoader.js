@@ -21,9 +21,9 @@ class AssetLoader {
 
           if (!parentObj[currDirName]) parentObj[currDirName] = {
             assetMap: new Map(),
-            getPath: function(path) {
-              if (path.includes("/")) {
-                let dirs = path.split("/");
+            getPath: function(p) {
+              if (p.includes("/")) {
+                let dirs = p.split("/");
                 let getProp = (ds, o=this) => {
                   if (ds.length == 1) {
                     return o[ds[0]];
@@ -34,19 +34,29 @@ class AssetLoader {
                 }
                 return getProp(dirs.slice(0, dirs.length - 1)).getPath(dirs[dirs.length - 1]);
               }
-              return this.assetMap.get(path);
+              return this.assetMap.get(path.parse(p).name);
             },
             get: function(path) {
               let fp = this.getPath(path);
               if (!fp) return null;
-              console.log(fp);
               return fs.readFileSync(fp);
+            },
+            getAsync: function(path) {
+              let fp = this.getPath(path);
+              if (!fp) return null;
+              return new Promise((res, rej) => {
+                fs.readFile(fp, (err, data) => {
+                  if (err) return rej(err);
+                  return res(data);
+                })
+              });
             }
           };
 
           for (let i = 0; i < files.length; i++) {
             let file = files[i];
-            let ext = path.extname(file);
+            let p = path.parse(file);
+            let ext = p.ext;
             if (!ext) {
               let obj = parentObj[currDirName];
               await mapDirectories(directory + "/" + file, obj, file);
@@ -59,7 +69,7 @@ class AssetLoader {
               }
               continue;
             }
-            let name = path.basename(file);
+            let name = p.name;
             parentObj[currDirName].assetMap.set(name, directory + "/" + file);
           }
           r(parentObj[currDirName]);
@@ -84,13 +94,13 @@ class AssetLoader {
   }
 }
 
-/*const loader = new AssetLoader();
+const loader = new AssetLoader();
 (async () => {
   await loader.load(); // gotta call this only once
-  console.log(loader.images.get("Spotify/Overlay.png")); // same as the following examples
+  console.log(loader.images.get("Spotify/Overlay")); // same as the following examples
   console.log(loader.images.Spotify.get("Overlay.png"));
-  console.log(loader.all.images.get("Spotify/Overlay.png"));
+  console.log(loader.all.images.get("Spotify/Overlay"));
   console.log(loader.all.get("images/Spotify/Overlay.png"));
-})();*/
+})();
 
 module.exports = AssetLoader;
