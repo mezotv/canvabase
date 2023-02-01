@@ -83,7 +83,7 @@ class Welcomer {
    * @returns {Welcomer}
    */
 
-  setcolor(color) {
+  setColor(color) {
     if (!color || typeof color !== "string") {
       throw new Error("Expected color string instead got " + typeof color);
     }
@@ -109,11 +109,13 @@ class Welcomer {
 
     background = background[Math.floor(Math.random() * background.length)]
 
-    const fetchColor = await getColor(background)
-    console.log(fetchColor)
+    if(!color) {
+      const fetchColor = await getColor(background)
 
     if (!color) { color = "#FFFFFF" }
     if (isLight(fetchColor)) { color = "#111111" }
+    }
+
 
     const canvas = canva.createCanvas(800, 270);
     const ctx = canvas.getContext("2d");
@@ -221,7 +223,7 @@ class Welcomer {
     }
 
 
-    // returns the buffer UwU
+    // returns the buffer Hehe
     return canvas.encode("png");
   }
 }
