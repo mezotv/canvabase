@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 class AssetLoader {
-  assetDirs = [ "./assets" ];
+  assetDirs = [ "./src/assets" ];
   // TODO: caching
 
   constructor(...sourceDirectories) {
