@@ -1,7 +1,6 @@
-const { isLight } = require("../functions/isLight");
-const { getColor } = require("../functions/fetchColor");
-const canva = require("@napi-rs/canvas");
-
+const { isLight } = require('../functions/isLight');
+const { getColor } = require('../functions/fetchColor');
+const canva = require('@napi-rs/canvas');
 
 /**
  * @example 
@@ -18,107 +17,112 @@ const canva = require("@napi-rs/canvas");
 
 class Welcomer {
   constructor() {
-    this.color = "#FFFFFF"
+    this.color = '#FFFFFF';
   }
 
   /**
-   * 
-   * @param {Array} background 
+   *
+   * @param {Array} background
    * @returns {Welcomer}
    */
 
   addBackground(background) {
     if (!Array.isArray(background)) {
-      throw new Error("Expected background array instead got " + typeof background);
+      throw new Error(
+        'Expected background array instead got ' + typeof background
+      );
     }
-    this.background = background
+    this.background = background;
     return this;
   }
 
   /**
-   * 
-   * @param {Array} name 
+   *
+   * @param {Array} name
    * @returns {Welcomer}
    */
 
   setName(name) {
-    if (!name || typeof name !== "string") {
-      throw new Error("Expected name string instead got " + typeof name);
+    if (!name || typeof name !== 'string') {
+      throw new Error('Expected name string instead got ' + typeof name);
     }
-    this.name = name
+    this.name = name;
     return this;
   }
 
   /**
-   * 
-   * @param {Array} title 
+   *
+   * @param {Array} title
    * @returns {Welcomer}
    */
 
   setTitle(title) {
-    if (!title || typeof title !== "string") {
-      throw new Error("Expected title string instead got " + typeof title);
+    if (!title || typeof title !== 'string') {
+      throw new Error('Expected title string instead got ' + typeof title);
     }
-    this.title = title
+    this.title = title;
     return this;
   }
 
   /**
-   * 
-   * @param {String} avatar 
+   *
+   * @param {String} avatar
    * @returns {Welcomer}
    */
 
   setAvatar(avatar) {
-    if (!avatar || typeof avatar !== "string") {
-      throw new Error("Expected avatar string instead got " + typeof avatar);
+    if (!avatar || typeof avatar !== 'string') {
+      throw new Error('Expected avatar string instead got ' + typeof avatar);
     }
-    this.avatar = avatar
+    this.avatar = avatar;
     return this;
   }
 
   /**
-   * 
-   * @param {String} color 
+   *
+   * @param {String} color
    * @returns {Welcomer}
    */
 
   setColor(color) {
-    if (!color || typeof color !== "string") {
-      throw new Error("Expected color string instead got " + typeof color);
+    if (!color || typeof color !== 'string') {
+      throw new Error('Expected color string instead got ' + typeof color);
     }
-    this.color = color
+    this.color = color;
     return this;
   }
 
-    /**
-     * This function builds the canvas
-     * @returns {Promise<Buffer>}
-     */
+  /**
+   * This function builds the canvas
+   * @returns {Promise<Buffer>}
+   */
 
   async build() {
-
     let { background, name, color, avatar, title } = this;
 
-    if (!background) throw new Error("No background provided in options.")
-    if (!avatar) throw new Error("No avatar provided in options.")
-    if (!name) throw new Error("No name provided in options.")
+    if (!background) throw new Error('No background provided in options.');
+    if (!avatar) throw new Error('No avatar provided in options.');
+    if (!name) throw new Error('No name provided in options.');
 
-    if (!title) { title = "Welcome!" }
-
-
-    background = background[Math.floor(Math.random() * background.length)]
-
-    if(!color) {
-      const fetchColor = await getColor(background)
-
-    if (!color) { color = "#FFFFFF" }
-    if (isLight(fetchColor)) { color = "#111111" }
+    if (!title) {
+      title = 'Welcome!';
     }
 
+    background = background[Math.floor(Math.random() * background.length)];
+
+    if (!color) {
+      const fetchColor = await getColor(background);
+
+      if (!color) {
+        color = '#FFFFFF';
+      }
+      if (isLight(fetchColor)) {
+        color = '#111111';
+      }
+    }
 
     const canvas = canva.createCanvas(800, 270);
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
 
     function roundImg(x, y, w, h, r) {
       ctx.beginPath();
@@ -135,20 +139,20 @@ class Welcomer {
     }
 
     function roundBackground(r) {
-      roundImg(20, 20, canvas.width, canvas.height, r)
-      roundImg(-20, -20, canvas.width, canvas.height, r)
-      roundImg(-30, 30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundImg(-30, -30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundImg(-30, -30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundImg(-30, -30, canvas.width, canvas.height, r)
-      roundImg(30, -30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundImg(30, -30, canvas.width, canvas.height, r)
-      roundImg(30, 30, canvas.width, canvas.height, r)
-      ctx.clip()
+      roundImg(20, 20, canvas.width, canvas.height, r);
+      roundImg(-20, -20, canvas.width, canvas.height, r);
+      roundImg(-30, 30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundImg(-30, -30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundImg(-30, -30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundImg(-30, -30, canvas.width, canvas.height, r);
+      roundImg(30, -30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundImg(30, -30, canvas.width, canvas.height, r);
+      roundImg(30, 30, canvas.width, canvas.height, r);
+      ctx.clip();
     }
 
     const fixedbkg = await canva.loadImage(background);
@@ -158,7 +162,7 @@ class Welcomer {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
     const blurImage = await canva.loadImage(
-      "https://cdn.discordapp.com/attachments/796548640755023883/801045183974211614/Empty.png"
+      'https://cdn.discordapp.com/attachments/796548640755023883/801045183974211614/Empty.png'
     );
 
     ctx.drawImage(blurImage, 0, 0, canvas.width, canvas.height);
@@ -166,14 +170,14 @@ class Welcomer {
     ctx.font = `bold 50px Life`;
     ctx.fillStyle = `${color}`;
     ctx.shadowBlur = 15;
-    ctx.textAlign = "start";
+    ctx.textAlign = 'start';
 
     const username =
-      name.length > 15 ? name.substring(0, 15).trim() + "..." : name;
+      name.length > 15 ? name.substring(0, 15).trim() + '...' : name;
 
     const textWidth = ctx.measureText(username).width;
     const x = canvas.width / 2 - textWidth / 2 + 65;
-    const y = 190
+    const y = 190;
 
     ctx.fillText(`${username}`, x, y);
 
@@ -183,11 +187,11 @@ class Welcomer {
 
     const textWidth1 = ctx.measureText(title).width;
     const x1 = canvas.width / 2 - textWidth1 / 2 + 65;
-    const y1 = 130
+    const y1 = 130;
 
     ctx.fillText(title, x1, y1);
 
-    const renderavatar = await canva.loadImage(avatar)
+    const renderavatar = await canva.loadImage(avatar);
 
     ctx.drawImage(renderavatar, 50, 50, 170, 170);
 
@@ -206,25 +210,24 @@ class Welcomer {
     }
 
     function roundBackground(r) {
-      roundPfp(20, 20, canvas.width, canvas.height, r)
-      roundPfp(-20, -20, canvas.width, canvas.height, r)
-      roundPfp(-30, 30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundPfp(-30, -30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundPfp(-30, -30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundPfp(-30, -30, canvas.width, canvas.height, r)
-      roundPfp(30, -30, canvas.width, canvas.height, r)
-      ctx.clip()
-      roundPfp(30, -30, canvas.width, canvas.height, r)
-      roundPfp(30, 30, canvas.width, canvas.height, r)
-      ctx.clip()
+      roundPfp(20, 20, canvas.width, canvas.height, r);
+      roundPfp(-20, -20, canvas.width, canvas.height, r);
+      roundPfp(-30, 30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundPfp(-30, -30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundPfp(-30, -30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundPfp(-30, -30, canvas.width, canvas.height, r);
+      roundPfp(30, -30, canvas.width, canvas.height, r);
+      ctx.clip();
+      roundPfp(30, -30, canvas.width, canvas.height, r);
+      roundPfp(30, 30, canvas.width, canvas.height, r);
+      ctx.clip();
     }
 
-
     // returns the buffer Hehe
-    return canvas.encode("png");
+    return canvas.encode('png');
   }
 }
 
