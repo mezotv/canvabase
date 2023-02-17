@@ -8,10 +8,12 @@ const canva = require('@napi-rs/canvas');
   .setName("Dominik")
   .setTitle("Welcome!")
   .addBackground(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
-  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512")
+  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "center")
+  .setColor("#ffff")
 
   welcomer.build().then((img) => {
-    canvabase.write("./test/welcomercard.png", img);
+  canvabase.write("./test/welcomercard.png", img);
+   })
   })
  */
 
@@ -67,13 +69,22 @@ class Welcomer {
   /**
    *
    * @param {String} avatar
+   * @param {String} position
    * @returns {Welcomer}
    */
 
-  setAvatar(avatar) {
+  setAvatar(avatar, position) {
     if (!avatar || typeof avatar !== 'string') {
       throw new Error('Expected avatar string instead got ' + typeof avatar);
     }
+
+    if (!position) position = 'left';
+
+    if (position !== 'left' && position !== 'right' && position !== 'center') {
+      throw new Error('Expected avatar position to be left, right or center');
+    }
+
+    this.position = position;
     this.avatar = avatar;
     return this;
   }
@@ -92,13 +103,14 @@ class Welcomer {
     return this;
   }
 
+
   /**
    * This function builds the canvas
    * @returns {Promise<Buffer>}
    */
 
   async build() {
-    let { background, name, color, avatar, title } = this;
+    let { background, name, color, avatar, title, position } = this;
 
     if (!background) throw new Error('No background provided in options.');
     if (!avatar) throw new Error('No avatar provided in options.');
@@ -174,26 +186,74 @@ class Welcomer {
 
     const username =
       name.length > 15 ? name.substring(0, 15).trim() + '...' : name;
-
     const textWidth = ctx.measureText(username).width;
-    const x = canvas.width / 2 - textWidth / 2 + 65;
-    const y = 190;
-
-    ctx.fillText(`${username}`, x, y);
-
-    ctx.font = `bold 50px Life`;
-    ctx.fillStyle = `${color}`;
-    ctx.shadowBlur = 15;
-
     const textWidth1 = ctx.measureText(title).width;
-    const x1 = canvas.width / 2 - textWidth1 / 2 + 65;
-    const y1 = 130;
-
-    ctx.fillText(title, x1, y1);
-
     const renderavatar = await canva.loadImage(avatar);
+    // switch start 
+    switch (position) {
+      case "left":
+        const xl = canvas.width / 2 - textWidth / 2 + 65;
+        const yl = 190;
 
-    ctx.drawImage(renderavatar, 50, 50, 170, 170);
+        ctx.fillText(`${username}`, xl, yl);
+
+        ctx.font = `bold 50px Life`;
+        ctx.fillStyle = `${color}`;
+        ctx.shadowBlur = 15;
+
+        const xl1 = canvas.width / 2 - textWidth1 / 2 + 65;
+        const yl1 = 135;
+
+        ctx.fillText(title, xl1, yl1);
+
+
+        ctx.drawImage(renderavatar, 50, 50, 170, 170);
+        break;
+
+      case "right":
+        const xr = canvas.width / 2 - textWidth / 2 - 65;
+        const yr = 190;
+
+        ctx.fillText(`${username}`, xr, yr);
+
+        ctx.font = `bold 25px Life`;
+        ctx.fillStyle = `${color}`;
+        ctx.shadowBlur = 15;
+
+        const xr1 = canvas.width / 2 - textWidth1 / 2 - 65;
+        const yr1 = 110;
+
+        ctx.fillText(title, xr1, yr1);
+
+
+        ctx.drawImage(renderavatar, 580, 50, 170, 170);
+        break;
+
+      case "center":
+        const xc = canvas.width / 2 - textWidth / 2;
+        const yc = 225;
+
+
+        ctx.fillText(`${username}`, xc, yc);
+
+        ctx.font = `bold 30px Life`;
+        ctx.fillStyle = `${color}`;
+        ctx.shadowBlur = 15;
+        ctx.textAlign = 'center';
+
+        const xc1 = canvas.width / 2;
+        const yc1 = 175;
+
+        ctx.fillText(title, xc1, yc1);
+
+
+        ctx.drawImage(renderavatar, 350, 45, 100, 100);
+        break;
+
+    }
+
+
+    // end 
 
     function roundPfp(x, y, w, h, r) {
       ctx.beginPath();

@@ -30,24 +30,24 @@ declare class Spotify {
     setArtist(artist: string): Spotify;
     artist: string;
     /**
-   *
-   * @param {String} albumn
-   * @returns {Spotify}
-   */
+     *
+     * @param {String} albumn
+     * @returns {Spotify}
+     */
     setAlbum(album: any): Spotify;
     album: string;
     /**
-   *
-   * @param {Number} duration
-   * @returns {Spotify}
-   */
+     *
+     * @param {Number} duration
+     * @returns {Spotify}
+     */
     setDuration(duration: number): Spotify;
     duration: number;
     /**
-   *
-   * @param {String} albumArt
-   * @returns {Spotify}
-   */
+     *
+     * @param {String} albumArt
+     * @returns {Spotify}
+     */
     setCover(albumArt: string): Spotify;
     albumArt: string;
     /**
