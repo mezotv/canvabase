@@ -7,8 +7,9 @@ const canva = require('@napi-rs/canvas');
  * const welcomer = new canvabase.Welcomer()
   .setName("Dominik")
   .setTitle("Welcome!")
-  .addBackground(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
-  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "center")
+  .addBackgrounds(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
+  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "normal")
+  .setPosition("left")
   .setColor("#ffff")
 
   welcomer.build().then((img) => {
@@ -19,8 +20,16 @@ const canva = require('@napi-rs/canvas');
 
 class Welcomer {
   constructor() {
-    this.color = '#FFFFFF';
+    
   }
+
+    /**
+   *
+   * @param {String} color
+   * @returns {String}
+   */
+
+  color = "#fff";
 
   /**
    *
@@ -28,7 +37,7 @@ class Welcomer {
    * @returns {Welcomer}
    */
 
-  addBackground(background) {
+  addBackgrounds(background) {
     if (!Array.isArray(background)) {
       throw new Error(
         'Expected background array instead got ' + typeof background
@@ -69,23 +78,39 @@ class Welcomer {
   /**
    *
    * @param {String} avatar
-   * @param {String} position
+   * @param {String} style
    * @returns {Welcomer}
    */
 
-  setAvatar(avatar, position) {
+  setAvatar(avatar, style) {
     if (!avatar || typeof avatar !== 'string') {
       throw new Error('Expected avatar string instead got ' + typeof avatar);
     }
 
+    if (!style) style = 'normal';
+
+    if (style !== 'normal' && style !== 'round' && style !== 'rounded') {
+      throw new Error('Expected avatar style to be normal, round or half-rounded');
+    }
+    this.style = style;
+    this.avatar = avatar;
+    return this;
+  }
+
+  /**
+   *
+   * @param {String} position 
+   * @returns {Welcomer}
+   */
+
+  setPosition(position) {
     if (!position) position = 'left';
 
     if (position !== 'left' && position !== 'right' && position !== 'center') {
-      throw new Error('Expected avatar position to be left, right or center');
+      throw new Error('Expected position to be left, right or center instead got ' + position + '.');
     }
 
     this.position = position;
-    this.avatar = avatar;
     return this;
   }
 
@@ -110,7 +135,7 @@ class Welcomer {
    */
 
   async build() {
-    let { background, name, color, avatar, title, position } = this;
+    let { background, name, color, avatar, title, position, style } = this;
 
     if (!background) throw new Error('No background provided in options.');
     if (!avatar) throw new Error('No avatar provided in options.');
@@ -189,7 +214,46 @@ class Welcomer {
     const textWidth = ctx.measureText(username).width;
     const textWidth1 = ctx.measureText(title).width;
     const renderavatar = await canva.loadImage(avatar);
-    // switch start 
+    
+
+     const applyStyle = (context) => {
+      console.log(style)
+      switch (style) {
+        case 'normal':
+          console.log("deine mom is normal")
+          break;
+        case 'round':
+          console.log("deine mom is round")
+	// ...
+	context.strokeRect(0, 0, canvas.width, canvas.height);
+
+	// Pick up the pen
+	context.beginPath();
+
+	// Start the arc to form a circle
+	context.arc(125, 125, 100, 0, Math.PI * 2, true);
+
+  context.closePath()
+
+          break;
+        case 'rounded':
+          console.log("deine mom is rounded")
+	// ...
+	context.strokeRect(0, 0, canvas.width, canvas.height);
+
+	// Pick up the pen
+	context.beginPath();
+
+	// Start the arc to form a circle
+	context.arc(125, 125, 100, 0, Math.PI * 2, true);
+
+  context.closePath()
+
+          break;
+      }
+  
+     }  
+
     switch (position) {
       case "left":
         const xl = canvas.width / 2 - textWidth / 2 + 65;
@@ -206,6 +270,7 @@ class Welcomer {
 
         ctx.fillText(title, xl1, yl1);
 
+        applyStyle(ctx)
 
         ctx.drawImage(renderavatar, 50, 50, 170, 170);
         break;
@@ -225,6 +290,7 @@ class Welcomer {
 
         ctx.fillText(title, xr1, yr1);
 
+        applyStyle(ctx)
 
         ctx.drawImage(renderavatar, 580, 50, 170, 170);
         break;
@@ -246,14 +312,13 @@ class Welcomer {
 
         ctx.fillText(title, xc1, yc1);
 
+        applyStyle(ctx)
 
-        ctx.drawImage(renderavatar, 350, 45, 100, 100);
+          ctx.drawImage(renderavatar, 350, 45, 100, 100);
         break;
 
     }
 
-
-    // end 
 
     function roundPfp(x, y, w, h, r) {
       ctx.beginPath();

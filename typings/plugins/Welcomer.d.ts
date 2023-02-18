@@ -5,7 +5,8 @@ export = Welcomer;
   .setName("Dominik")
   .setTitle("Welcome!")
   .addBackground(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
-  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "center")
+  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "normal")
+  .setPosition("left")
   .setColor("#ffff")
 
   welcomer.build().then((img) => {
@@ -39,12 +40,19 @@ declare class Welcomer {
     /**
      *
      * @param {String} avatar
+     * @param {String} style
+     * @returns {Welcomer}
+     */
+    setAvatar(avatar: string, style: string): Welcomer;
+    style: string;
+    avatar: string;
+    /**
+     *
      * @param {String} position
      * @returns {Welcomer}
      */
-    setAvatar(avatar: string, position: string): Welcomer;
+    setPosition(position: string): Welcomer;
     position: string;
-    avatar: string;
     /**
      *
      * @param {String} color
