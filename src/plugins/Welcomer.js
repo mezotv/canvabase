@@ -7,8 +7,10 @@ const canva = require('@napi-rs/canvas');
  * const welcomer = new canvabase.Welcomer()
   .setName("Dominik")
   .setTitle("Welcome!")
-  .addBackground(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
-  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "center")
+  .addBackgrounds(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
+  .addBackground("https://wallpapercave.com/wp/wp11735586.jpg")
+  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "normal")
+  .setPosition("right")
   .setColor("#ffff")
 
   welcomer.build().then((img) => {
@@ -19,19 +21,43 @@ const canva = require('@napi-rs/canvas');
 
 class Welcomer {
   constructor() {
-    this.color = '#FFFFFF';
+
+  }
+
+  /**
+ *
+ * @param {String} color
+ * @returns {String}
+ */
+
+  color = "#fff";
+
+  /**
+   *
+   * @param {Array} backgrounds
+   * @returns {Welcomer}
+   */
+
+  addBackgrounds(backgrounds) {
+    if (!Array.isArray(backgrounds)) {
+      throw new TypeError(
+        'Expected backgrounds array instead got ' + typeof backgrounds
+      );
+    }
+    this.backgrounds = backgrounds;
+    return this;
   }
 
   /**
    *
-   * @param {Array} background
+   * @param {String} background
    * @returns {Welcomer}
    */
 
   addBackground(background) {
-    if (!Array.isArray(background)) {
-      throw new Error(
-        'Expected background array instead got ' + typeof background
+    if (!background || typeof background !== 'string') {
+      throw new TypeError(
+        'Expected background string instead got ' + typeof background
       );
     }
     this.background = background;
@@ -46,7 +72,7 @@ class Welcomer {
 
   setName(name) {
     if (!name || typeof name !== 'string') {
-      throw new Error('Expected name string instead got ' + typeof name);
+      throw new TypeError('Expected name string instead got ' + typeof name);
     }
     this.name = name;
     return this;
@@ -60,7 +86,7 @@ class Welcomer {
 
   setTitle(title) {
     if (!title || typeof title !== 'string') {
-      throw new Error('Expected title string instead got ' + typeof title);
+      throw new TypeError('Expected title string instead got ' + typeof title);
     }
     this.title = title;
     return this;
@@ -69,23 +95,39 @@ class Welcomer {
   /**
    *
    * @param {String} avatar
-   * @param {String} position
+   * @param {String} style
    * @returns {Welcomer}
    */
 
-  setAvatar(avatar, position) {
+  setAvatar(avatar, style) {
     if (!avatar || typeof avatar !== 'string') {
-      throw new Error('Expected avatar string instead got ' + typeof avatar);
+      throw new TypeError('Expected avatar string instead got ' + typeof avatar);
     }
 
+    if (!style) style = 'normal';
+
+    if (style !== 'normal' && style !== 'round' && style !== 'rounded') {
+      throw new TypeError('Expected avatar style to be normal, round or half-rounded');
+    }
+    this.style = style;
+    this.avatar = avatar;
+    return this;
+  }
+
+  /**
+   *
+   * @param {String} position 
+   * @returns {Welcomer}
+   */
+
+  setPosition(position) {
     if (!position) position = 'left';
 
     if (position !== 'left' && position !== 'right' && position !== 'center') {
-      throw new Error('Expected avatar position to be left, right or center');
+      throw new TypeError('Expected position to be left, right or center instead got ' + position + '.');
     }
 
     this.position = position;
-    this.avatar = avatar;
     return this;
   }
 
@@ -97,7 +139,7 @@ class Welcomer {
 
   setColor(color) {
     if (!color || typeof color !== 'string') {
-      throw new Error('Expected color string instead got ' + typeof color);
+      throw new TypeError('Expected color string instead got ' + typeof color);
     }
     this.color = color;
     return this;
@@ -110,20 +152,27 @@ class Welcomer {
    */
 
   async build() {
-    let { background, name, color, avatar, title, position } = this;
+    let { backgrounds, background, name, color, avatar, title, position, style, } = this;
 
-    if (!background) throw new Error('No background provided in options.');
+    if (!backgrounds && !background) throw new Error('No backgrounds provided in options.');
     if (!avatar) throw new Error('No avatar provided in options.');
     if (!name) throw new Error('No name provided in options.');
+
+    if (backgrounds && background) {
+      throw new Error('You can only use one background type, either .addBackgrounds or .addBackground.');
+    }
 
     if (!title) {
       title = 'Welcome!';
     }
-
-    background = background[Math.floor(Math.random() * background.length)];
-
+    if(backgrounds) {
+      if (backgrounds.length == 1) throw new Error('Only one background provided please use .addBackground for one background.');
+    background = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+    } else {
+      background = background;
+    }
     if (!color) {
-      const fetchColor = await getColor(background);
+      const fetchColor = await getColor(backgrounds);
 
       if (!color) {
         color = '#FFFFFF';
@@ -189,7 +238,31 @@ class Welcomer {
     const textWidth = ctx.measureText(username).width;
     const textWidth1 = ctx.measureText(title).width;
     const renderavatar = await canva.loadImage(avatar);
-    // switch start 
+
+
+    const applyStyle = (context, renderavatar, x, y, size, size2) => {
+      switch (style) {
+        case 'normal':
+          context.drawImage(renderavatar, x, y, size, size2);
+          break;
+        case 'round':
+          context.beginPath();
+          context.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2, true);
+          context.closePath();
+          context.clip();
+          context.drawImage(renderavatar, x, y, size, size2);
+
+          break;
+        case 'rounded':
+          context.beginPath();
+          roundImg(x, y, size, size2, 20);
+          context.clip();
+          context.drawImage(renderavatar, x, y, size, size2);
+          break;
+      }
+
+    }
+
     switch (position) {
       case "left":
         const xl = canvas.width / 2 - textWidth / 2 + 65;
@@ -206,8 +279,8 @@ class Welcomer {
 
         ctx.fillText(title, xl1, yl1);
 
+        applyStyle(ctx, renderavatar, 50, 50, 170, 170)
 
-        ctx.drawImage(renderavatar, 50, 50, 170, 170);
         break;
 
       case "right":
@@ -216,7 +289,7 @@ class Welcomer {
 
         ctx.fillText(`${username}`, xr, yr);
 
-        ctx.font = `bold 25px Life`;
+        ctx.font = `bold 50px Life`;
         ctx.fillStyle = `${color}`;
         ctx.shadowBlur = 15;
 
@@ -225,8 +298,8 @@ class Welcomer {
 
         ctx.fillText(title, xr1, yr1);
 
+        applyStyle(ctx, renderavatar, 580, 50, 170, 170)
 
-        ctx.drawImage(renderavatar, 580, 50, 170, 170);
         break;
 
       case "center":
@@ -246,14 +319,12 @@ class Welcomer {
 
         ctx.fillText(title, xc1, yc1);
 
+        applyStyle(ctx, renderavatar, 350, 45, 100, 100)
 
-        ctx.drawImage(renderavatar, 350, 45, 100, 100);
         break;
 
     }
 
-
-    // end 
 
     function roundPfp(x, y, w, h, r) {
       ctx.beginPath();

@@ -19,7 +19,7 @@
   "author": "Dominik K.",
   "license": "MIT",
   "dependencies": {
-    "@napi-rs/canvas": "0.1.30"
+    "@napi-rs/canvas": "0.1.35"
   },
   "engines": {
     "node": ">=16.9.0"
