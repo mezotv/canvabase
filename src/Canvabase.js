@@ -2,7 +2,7 @@ const fs = require('fs');
 
 class Canvabase {
   /**
-   * **⚠ You may not instantiate Canvacord class! ⚠**
+   * **⚠ You may not instantiate the Canvabase class! ⚠**
    * @hideconstructor
    */
   constructor() {
