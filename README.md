@@ -23,11 +23,14 @@ const canvabase = require("canvabase");
 const welcomer = new canvabase.Welcomer()
   .setName("Dominik")
   .setTitle("Welcome!")
-  .addBackground(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
-  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512")
+  //.addBackgrounds(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
+  .addBackground("https://wallpapercave.com/wp/wp5128415.jpg")
+  .setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "rounded")
+  .setPosition("left")
+  .setColor("#ffff")
 
-welcomer.build().then((img) => {
-  canvabase.write("./welcomercard.png", img);
+  welcomer.build().then((img) => {
+  canvabase.write("./test/welcomercard.png", img);
 })
 ```
 
