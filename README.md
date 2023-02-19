@@ -35,7 +35,7 @@ const welcomer = new canvabase.Welcomer()
 ```
 
 ### Output
-![Downloads](https://cdn.discordapp.com/attachments/967547482575888384/1069320650499575859/welcomercard.png)
+![WelcomeCard](https://cdn.discordapp.com/attachments/624285531580399650/1076665956241260605/welcomercard.png)
 
 
 
@@ -43,6 +43,7 @@ const welcomer = new canvabase.Welcomer()
 
 - Object Oriented
 - Fully documented
-- Similar to Canvacord
+- Unique Features
+- Easy to customize
 - Utilizes @napi-rs/canvas
 
