@@ -204,7 +204,7 @@ class Spotify {
     );
     ctx.drawImage(image, 0, 0, 428, 926);
 
-    // returns the buffer Ara Ara
+    // returns the buffer
     return canvasObject.encode('png');
   }
 }

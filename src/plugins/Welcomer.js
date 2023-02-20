@@ -357,7 +357,7 @@ class Welcomer {
       ctx.clip();
     }
 
-    // returns the buffer Hehe
+    // returns the buffer
     return canvas.encode('png');
   }
 }
