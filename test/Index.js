@@ -25,3 +25,19 @@ const welcomer = new canvabase.Welcomer()
 welcomer.build().then((img) => {
   canvabase.write("./test/welcomercard.png", img);
 })
+
+const botlist = new canvabase.Botlist()
+.setStyle("small")
+.setUsername("Would You")
+.addDescription("This is a cool bot")
+.setStatus("dnd")
+.setGuilds(20000000)
+.setVotes(1000)
+.setPrefix("w!")
+.setLibrary("discord.js")
+.setBotlist("https://discord.gg/invite")
+
+
+botlist.build().then((img) => {
+  canvabase.write("./test/botlist.png", img);
+});

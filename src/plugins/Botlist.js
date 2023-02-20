@@ -121,6 +121,20 @@ class Botlist {
     }
 
     /**
+     *
+     * @param {String} prefix
+     * @returns {Botlist}
+     */
+
+     setPrefix(prefix) {
+        if (!prefix || typeof prefix !== 'string') {
+            throw new Error('Expected prefix string instead got ' + typeof prefix);
+        }
+        this.prefix = prefix;
+        return this;
+    }
+
+    /**
     *
     * @param {String} botlist
     * @param {String} icon
@@ -132,7 +146,7 @@ class Botlist {
             throw new Error('Expected botlist string instead got ' + typeof botlist);
         }
         if (!icon) {
-            icon = 'https://cdn.discordapp.com/attachments/827530000000000000/827530002000578590/unknown.png';
+            icon = 'https://cdn.discordapp.com/avatars/529815278456930314/76b717e78fe80bfb2dbb73b60e96fd14.webp?size=60';
         }
         this.botlist = botlist;
         this.icon = icon;
@@ -146,9 +160,9 @@ class Botlist {
      */
 
     async build() {
-        const { username, description, status, library, guilds, votes, botlist, icon, style } = this;
+        const { username, description, status, library, guilds, votes, botlist, icon, style, prefix } = this;
 
-
+                            
         canvas.GlobalFonts.registerFromPath(
             join(
                 __dirname,
@@ -173,12 +187,64 @@ class Botlist {
             ),
             'FontRegular'
         );
+        
+
+        switch (style) {
+            case 'medium':
+                break;
+            case 'small':
         const canvasObject = canvas.createCanvas(400, 140);
         const ctx = canvasObject.getContext('2d');
 
+        const layout = await canvas.loadImage(
+            'https://cdn.discordapp.com/attachments/1047187283234795580/1077319094128361472/small-widget.png'
+          );
+      
+          ctx.drawImage(layout, 0, 0, canvas.width, canvas.height);
 
+        ctx.font = '25px FontBold';
+        ctx.fillStyle = '#B3B3B3';
+        ctx.textAlign = 'left'; // center the text horizontally
+        ctx.textBaseline = 'top'; // align the text to the top of the canvas
+        ctx.fillText(username, 15, 10);
+
+        ctx.font = '20px FontBold';
+        ctx.fillStyle = '#B3B3B3';
+        ctx.textAlign = 'left'; // center the text horizontally
+        ctx.textBaseline = 'top'; // align the text to the top of the canvas
+        ctx.fillText(guilds.toLocaleString(), 15, 55);
+                    
+        ctx.font = '20px FontBold';
+        ctx.fillStyle = '#B3B3B3';
+        ctx.textAlign = 'left'; // center the text horizontally
+        ctx.textBaseline = 'top'; // align the text to the top of the canvas
+        ctx.fillText(votes.toLocaleString(), 213, 55);
+
+        ctx.font = '20px FontBold';
+        ctx.fillStyle = '#B3B3B3';
+        ctx.textAlign = 'left'; // center the text horizontally
+        ctx.textBaseline = 'top'; // align the text to the top of the canvas
+        ctx.fillText(library, 15, 85);
+
+        ctx.font = '20px FontBold';
+        ctx.fillStyle = '#B3B3B3';
+        ctx.textAlign = 'left'; // center the text horizontally
+        ctx.textBaseline = 'top'; // align the text to the top of the canvas
+        ctx.fillText(prefix, 213, 85);
+            
+        ctx.font = '15px FontBold';
+        ctx.fillStyle = '#fff4';
+        ctx.textAlign = 'center'; // center the text horizontally
+        ctx.textBaseline = 'top'; // align the text to the top of the canvas
+        ctx.fillText(botlist, 200, 121);
+            
+            
         // returns the buffer
         return canvasObject.encode('png');
+                break;
+            case 'big':
+                break;
+        }
     }
 }
 
