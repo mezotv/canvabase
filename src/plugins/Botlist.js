@@ -17,6 +17,27 @@ class Botlist {
 
     /**
      *
+     * @param {String} style
+     * @returns {Botlist}
+     */
+
+    setStyle(style) {
+        if(!style) {
+            style = 'medium';
+        }
+        if ( typeof style !== 'string') {
+            throw new Error('Expected style string instead got ' + typeof style);
+        }
+
+        if (style !== 'medium' && style !== 'small' && style !== 'big') {
+            throw new TypeError('Expected avatar style to be medium, small or big');
+          }
+        this.style = style;
+        return this;
+    }
+
+    /**
+     *
      * @param {String} username
      * @returns {Botlist}
      */
@@ -125,7 +146,7 @@ class Botlist {
      */
 
     async build() {
-        const { username, description, status, library, guilds, votes, botlist, icon  } = this;
+        const { username, description, status, library, guilds, votes, botlist, icon, style } = this;
 
 
         canvas.GlobalFonts.registerFromPath(

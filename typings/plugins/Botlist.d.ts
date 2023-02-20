@@ -10,6 +10,13 @@ export = Botlist;
 declare class Botlist {
     /**
      *
+     * @param {String} style
+     * @returns {Botlist}
+     */
+    setStyle(style: string): Botlist;
+    style: string;
+    /**
+     *
      * @param {String} username
      * @returns {Botlist}
      */
