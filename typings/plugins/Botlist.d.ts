@@ -24,6 +24,13 @@ declare class Botlist {
     username: string;
     /**
      *
+     * @param {String} avatar
+     * @returns {Botlist}
+     */
+    setAvatar(avatar: string): Botlist;
+    avatar: string;
+    /**
+     *
      * @param {String} description
      * @returns {Botlist}
      */
@@ -58,14 +65,19 @@ declare class Botlist {
     setLibrary(library: string): Botlist;
     library: string;
     /**
+     *
+     * @param {String} prefix
+     * @returns {Botlist}
+     */
+    setPrefix(prefix: string): Botlist;
+    prefix: string;
+    /**
     *
     * @param {String} botlist
-    * @param {String} icon
     * @returns {Botlist}
     */
-    setBotlist(botlist: string, icon: string): Botlist;
+    setBotlist(botlist: string): Botlist;
     botlist: string;
-    icon: string;
     /**
      * This function builds the canvas
      * @returns {Promise<Buffer>}

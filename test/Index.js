@@ -31,11 +31,12 @@ const botlist = new canvabase.Botlist()
 .setUsername("Would You")
 .addDescription("This is a cool bot")
 .setStatus("dnd")
-.setGuilds(20000000)
-.setVotes(1000)
-.setPrefix("w!")
+.setGuilds(2310)
+.setVotes(80)
+.setPrefix("/")
+.setAvatar("https://cdn.discordapp.com/icons/1009562516105461780/a2b2fb036d7a044bea40493685f84462.webp?size=80")
 .setLibrary("discord.js")
-.setBotlist("https://discord.gg/invite")
+.setBotlist("https://discord.gg/wouldyou")
 
 
 botlist.build().then((img) => {
