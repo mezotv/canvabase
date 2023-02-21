@@ -22,16 +22,16 @@ class Botlist {
      */
 
     setStyle(style) {
-        if(!style) {
+        if (!style) {
             style = 'medium';
         }
-        if ( typeof style !== 'string') {
+        if (typeof style !== 'string') {
             throw new Error('Expected style string instead got ' + typeof style);
         }
 
         if (style !== 'medium' && style !== 'small' && style !== 'big') {
             throw new TypeError('Expected avatar style to be medium, small or big');
-          }
+        }
         this.style = style;
         return this;
     }
@@ -47,6 +47,24 @@ class Botlist {
             throw new Error('Expected username string instead got ' + typeof username);
         }
         this.username = username;
+        return this;
+    }
+
+    /**
+     *
+     * @param {String} avatar
+     * @returns {Botlist}
+     */
+
+    setAvatar(avatar) {
+        if (!avatar || typeof avatar !== 'string') {
+            throw new Error('Expected avatar string instead got ' + typeof avatar);
+        }
+
+        if (!avatar) {
+            avatar = 'https://cdn.discordapp.com/avatars/529815278456930314/76b717e78fe80bfb2dbb73b60e96fd14.webp?size=60';
+        }
+        this.avatar = avatar;
         return this;
     }
 
@@ -126,7 +144,7 @@ class Botlist {
      * @returns {Botlist}
      */
 
-     setPrefix(prefix) {
+    setPrefix(prefix) {
         if (!prefix || typeof prefix !== 'string') {
             throw new Error('Expected prefix string instead got ' + typeof prefix);
         }
@@ -160,9 +178,9 @@ class Botlist {
      */
 
     async build() {
-        const { username, description, status, library, guilds, votes, botlist, icon, style, prefix } = this;
+        const { username, description, status, library, guilds, votes, botlist, icon, style, prefix, avatar } = this;
 
-                            
+
         canvas.GlobalFonts.registerFromPath(
             join(
                 __dirname,
@@ -187,60 +205,69 @@ class Botlist {
             ),
             'FontRegular'
         );
-        
 
         switch (style) {
             case 'medium':
                 break;
             case 'small':
-        const canvasObject = canvas.createCanvas(400, 140);
-        const ctx = canvasObject.getContext('2d');
+                const canvasObject = canvas.createCanvas(400, 140);
+                const ctx = canvasObject.getContext('2d');
 
-        const layout = await canvas.loadImage(
-            'https://cdn.discordapp.com/attachments/1047187283234795580/1077319094128361472/small-widget.png'
-          );
-      
-          ctx.drawImage(layout, 0, 0, canvas.width, canvas.height);
+                const layout = await canvas.loadImage(
+                    'https://cdn.discordapp.com/attachments/1047187283234795580/1077319094128361472/small-widget.png'
+                );
 
-        ctx.font = '25px FontBold';
-        ctx.fillStyle = '#B3B3B3';
-        ctx.textAlign = 'left'; // center the text horizontally
-        ctx.textBaseline = 'top'; // align the text to the top of the canvas
-        ctx.fillText(username, 15, 10);
+                ctx.drawImage(layout, 0, 0, canvas.width, canvas.height);
 
-        ctx.font = '20px FontBold';
-        ctx.fillStyle = '#B3B3B3';
-        ctx.textAlign = 'left'; // center the text horizontally
-        ctx.textBaseline = 'top'; // align the text to the top of the canvas
-        ctx.fillText(guilds.toLocaleString(), 15, 55);
-                    
-        ctx.font = '20px FontBold';
-        ctx.fillStyle = '#B3B3B3';
-        ctx.textAlign = 'left'; // center the text horizontally
-        ctx.textBaseline = 'top'; // align the text to the top of the canvas
-        ctx.fillText(votes.toLocaleString(), 213, 55);
+                ctx.font = '25px FontBold';
+                ctx.fillStyle = '#fff';
+                ctx.textAlign = 'left'; // center the text horizontally
+                ctx.textBaseline = 'top'; // align the text to the top of the canvas
+                ctx.fillText(username, 45, 10);
 
-        ctx.font = '20px FontBold';
-        ctx.fillStyle = '#B3B3B3';
-        ctx.textAlign = 'left'; // center the text horizontally
-        ctx.textBaseline = 'top'; // align the text to the top of the canvas
-        ctx.fillText(library, 15, 85);
 
-        ctx.font = '20px FontBold';
-        ctx.fillStyle = '#B3B3B3';
-        ctx.textAlign = 'left'; // center the text horizontally
-        ctx.textBaseline = 'top'; // align the text to the top of the canvas
-        ctx.fillText(prefix, 213, 85);
-            
-        ctx.font = '15px FontBold';
-        ctx.fillStyle = '#fff4';
-        ctx.textAlign = 'center'; // center the text horizontally
-        ctx.textBaseline = 'top'; // align the text to the top of the canvas
-        ctx.fillText(botlist, 200, 121);
-            
-            
-        // returns the buffer
-        return canvasObject.encode('png');
+                ctx.font = '20px FontBold';
+                ctx.fillStyle = '#fff9';
+                ctx.textAlign = 'left'; // center the text horizontally
+                ctx.textBaseline = 'top'; // align the text to the top of the canvas
+                ctx.fillText(guilds.toLocaleString(), 15, 55);
+
+                ctx.font = '20px FontBold';
+                ctx.fillStyle = '#fff9';
+                ctx.textAlign = 'left'; // center the text horizontally
+                ctx.textBaseline = 'top'; // align the text to the top of the canvas
+                ctx.fillText(votes.toLocaleString(), 213, 55);
+
+                ctx.font = '20px FontBold';
+                ctx.fillStyle = '#fff9';
+                ctx.textAlign = 'left'; // center the text horizontally
+                ctx.textBaseline = 'top'; // align the text to the top of the canvas
+                ctx.fillText(library, 15, 85);
+
+                ctx.font = '20px FontBold';
+                ctx.fillStyle = '#fff9';
+                ctx.textAlign = 'left'; // center the text horizontally
+                ctx.textBaseline = 'top'; // align the text to the top of the canvas
+                ctx.fillText(prefix, 213, 85);
+
+                ctx.font = '15px FontBold';
+                ctx.fillStyle = '#fff7';
+                ctx.textAlign = 'center'; // center the text horizontally
+                ctx.textBaseline = 'top'; // align the text to the top of the canvas
+                ctx.fillText(botlist, 200, 121);
+
+                const avatarIcon = await canvas.loadImage(
+                    'https://cdn.discordapp.com/avatars/529815278456930314/76b717e78fe80bfb2dbb73b60e96fd14.webp?size=60'
+                );
+
+                ctx.beginPath();
+                ctx.arc(10 + 27 / 2, 6 + 27 / 2, 27 / 2, 0, Math.PI * 2, true);
+                ctx.closePath();
+                ctx.clip();
+                ctx.drawImage(avatarIcon, 10, 6, 27, 27);
+
+                // returns the buffer
+                return canvasObject.encode('png');
                 break;
             case 'big':
                 break;
