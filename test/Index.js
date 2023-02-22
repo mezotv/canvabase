@@ -42,3 +42,11 @@ const botlist = new canvabase.Botlist()
 botlist.build().then((img) => {
   canvabase.write("./test/botlist.png", img);
 });
+
+const ticketer = new canvabase.Ticketer()
+.setTexts(["Hello", "How are you?", "I'm fine, thanks!"])
+.setIcons(["https://cdn.discordapp.com/emojis/810000000000000000.png?v=1", "https://cdn.discordapp.com/emojis/810000000000000000.png?v=1", "https://cdn.discordapp.com/emojis/810000000000000000.png?v=1"])
+
+ticketer.build().then((img) => {
+  canvabase.write("./test/ticketer.png", img);
+});

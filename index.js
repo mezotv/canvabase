@@ -3,6 +3,7 @@ const Canvabase = require("./src/Canvabase");
 module.exports = {
     Canvas: Canvabase,
     Canvabase,
+    Ticketer: require('./src/plugins/Ticketer'),
     AssetLoader: require('./src/AssetLoader'),
     Spotify: require('./src/plugins/Spotify'),
     Welcomer: require('./src/plugins/Welcomer'),
