@@ -1,5 +1,3 @@
-const { isLight } = require('../functions/isLight');
-const { getSpotifyColor } = require('../functions/fetchSpotifyColor');
 const canvas = require('@napi-rs/canvas');
 const { join } = require('path');
 
