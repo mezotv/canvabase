@@ -1,8 +1,8 @@
-const fs = require('node:fs');
-const path = require('node:path');
+const fs = require("node:fs");
+const path = require("node:path");
 
 class AssetLoader {
-  assetDirs = ['./src/assets'];
+  assetDirs = ["./src/assets"];
   // TODO: caching
 
   constructor(...sourceDirectories) {
@@ -20,7 +20,7 @@ class AssetLoader {
           var files = (await this.readDir(directory)).flat(1);
           var topLevel = false;
           if (!currDirName) {
-            currDirName = 'all';
+            currDirName = "all";
             topLevel = true;
           }
 
@@ -28,8 +28,8 @@ class AssetLoader {
             parentObj[currDirName] = {
               assetMap: new Map(),
               getPath: function (p) {
-                if (p.includes('/')) {
-                  let dirs = p.split('/');
+                if (p.includes("/")) {
+                  let dirs = p.split("/");
                   let getProp = (ds, o = this) => {
                     if (ds.length == 1) {
                       return o[ds[0]];
@@ -67,7 +67,7 @@ class AssetLoader {
             let ext = p.ext;
             if (!ext) {
               let obj = parentObj[currDirName];
-              await mapDirectories(directory + '/' + file, obj, file);
+              await mapDirectories(directory + "/" + file, obj, file);
               if (topLevel) {
                 Object.defineProperty(parentObj, file, {
                   get: () => {
@@ -78,7 +78,7 @@ class AssetLoader {
               continue;
             }
             let name = p.name;
-            parentObj[currDirName].assetMap.set(name, directory + '/' + file);
+            parentObj[currDirName].assetMap.set(name, directory + "/" + file);
           }
           r(parentObj[currDirName]);
         });

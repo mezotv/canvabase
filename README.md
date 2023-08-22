@@ -1,6 +1,6 @@
 # Canvabase
 
-Canvabase is a simple and easy to use yet powerful image manipulation library. Canvabase is built on top of [@napi-rs/canvas](https://www.npmjs.com/package/@napi-rs/canvas) to ensure fast image building speeds.
+Canvabase is a simple and easy-to-use yet powerful image manipulation library. Canvabase is built on top of [@napi-rs/canvas](https://www.npmjs.com/package/@napi-rs/canvas) to ensure fast image-building speeds. Check out my other projects [here](https://wouldyoubot.gg)
 
 [![install size](https://packagephobia.com/badge?p=canvabase)](https://packagephobia.com/result?p=canvabase)
 [![Downloads](https://img.shields.io/npm/dm/canvabase?sanitize=true)](https://npmcharts.com/compare/canvabase?minimal=true)

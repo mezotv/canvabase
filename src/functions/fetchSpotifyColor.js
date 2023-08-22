@@ -1,8 +1,8 @@
-const canvas = require('@napi-rs/canvas');
+const canvas = require("@napi-rs/canvas");
 
 async function getSpotifyColor(imagePath) {
   const canvasObject = canvas.createCanvas(640, 640);
-  const ctx = canvasObject.getContext('2d');
+  const ctx = canvasObject.getContext("2d");
   const image = await canvas.loadImage(imagePath);
   ctx.drawImage(image, 0, 0);
 
@@ -16,16 +16,16 @@ async function getSpotifyColor(imagePath) {
   const r = data[0];
   const g = data[1];
   const b = data[2];
-  let color = `#${r.toString(16).padStart(2, '0')}${g
+  let color = `#${r.toString(16).padStart(2, "0")}${g
     .toString(16)
-    .padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+    .padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 
   const r2 = data2[0];
   const g2 = data2[1];
   const b2 = data2[2];
-  let color2 = `#${r2.toString(16).padStart(2, '0')}${g2
+  let color2 = `#${r2.toString(16).padStart(2, "0")}${g2
     .toString(16)
-    .padStart(2, '0')}${b2.toString(16).padStart(2, '0')}`;
+    .padStart(2, "0")}${b2.toString(16).padStart(2, "0")}`;
 
   return [color, color2];
 }

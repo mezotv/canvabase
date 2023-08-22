@@ -9,7 +9,7 @@ const isLight = (color) => {
     b = +color_match[3];
   } else {
     color_match = +(
-      '0x' + color.slice(1).replace(color.length < 5 && /./g, '$&$&')
+      "0x" + color.slice(1).replace(color.length < 5 && /./g, "$&$&")
     );
     r = color_match >> 16;
     g = (color_match >> 8) & 255;

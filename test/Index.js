@@ -18,7 +18,7 @@ const welcomer = new canvabase.Welcomer()
 .setTitle("Welcome!")
 //.addBackgrounds(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
 .addBackground("https://wallpapercave.com/wp/wp5128415.jpg")
-.setAvatar("https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512", "rounded")
+.setAvatar("https://cdn.discordapp.com/avatars/1129276241397174322/eb285a4fc0ec3d78dea3cbbb6012e714.webp?size=80", "rounded")
 .setPosition("left")
 .setColor("#ffff")
 
