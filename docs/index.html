@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvabase</title>
+</head>
+<body>
+    <header>
+        <h1>Canvabase</h1>
+    </header>
+    
+    <main>
+        <section>
+            <p>Canvabase is a simple and easy-to-use yet powerful image manipulation library. Canvabase is built on top of <a href="https://www.npmjs.com/package/@napi-rs/canvas">@napi-rs/canvas</a> to ensure fast image-building speeds. Check out my other projects <a href="https://wouldyoubot.gg/">here</a></p>
+        </section>
+        
+        <section>
+            <p>
+                <a href="https://packagephobia.com/result?p=canvabase"><img src="https://packagephobia.com/badge?p=canvabase" alt="install size"></a>
+                <a href="https://npmcharts.com/compare/canvabase?minimal=true"><img src="https://img.shields.io/npm/dm/canvabase?sanitize=true" alt="Downloads"></a>
+                <a href="https://www.codefactor.io/repository/github/mezotv/canvabase"><img src="https://www.codefactor.io/repository/github/mezotv/canvabase/badge" alt="CodeFactor"></a>
+            </p>
+        </section>
+        
+        <section>
+            <h2>Installation</h2>
+            <p>Installing Canvabase</p>
+            <pre><code class="language-bash">$ npm install canvabase
+</code></pre>
+        </section>
+        
+        <section>
+            <h2>Usage</h2>
+            <pre><code class="language-js">const canvabase = require("canvabase");
+
+const welcomer = new canvabase.Welcomer()
+  .setName("Dominik")
+  .setTitle("Welcome!")
+  //.addBackgrounds(["https://wallpapercave.com/wp/wp5128415.jpg", "https://wallpapercave.com/wp/wp11735586.jpg"])
+  .addBackground("https://wallpapercave.com/wp/wp5128415.jpg")
+  .setAvatar(
+    "https://cdn.discordapp.com/avatars/347077478726238228/3b77f755fa8e66fd75d1e2d3fb8b1611.png?size=512",
+    "rounded"
+  )
+  .setPosition("left")
+  .setColor("#ffff");
+
+welcomer.build().then((img) =&gt; {
+  canvabase.write("./test/welcomercard.png", img);
+});
+</code></pre>
+        </section>
+        
+        <section>
+            <h3>Output</h3>
+            <p><img src="https://cdn.discordapp.com/attachments/624285531580399650/1076665956241260605/welcomercard.png" alt="WelcomeCard"></p>
+        </section>
+        
+        <section>
+            <h2>Features</h2>
+            <ul>
+                <li>Object Oriented</li>
+                <li>Fully documented</li>
+                <li>Unique Features</li>
+                <li>Easy to customize</li>
+                <li>Utilizes @napi-rs/canvas</li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
