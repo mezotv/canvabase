@@ -5,6 +5,7 @@ module.exports = {
     Canvabase,
     AssetLoader: require('./src/AssetLoader'),
     Spotify: require('./src/plugins/Spotify'),
+    Leaderboard: require('./src/plugins/Leaderboard'),
     Welcomer: require('./src/plugins/Welcomer'),
     write: Canvabase.write,
     author: require("./package.json").author,

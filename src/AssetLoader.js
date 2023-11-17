@@ -84,9 +84,9 @@ class AssetLoader {
         });
       };
       let dirs = [];
-      this.assetDirs.forEach((d) => {
+      for (const d of this.assetDirs) {
         dirs.push(mapDirectories(d));
-      });
+      }
       await Promise.allSettled(dirs);
 
       res(this);
