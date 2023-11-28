@@ -17,10 +17,10 @@ export = Welcomer;
  */
 declare class Welcomer {
     /**
-   *
-   * @param {String} color
-   * @returns {String}
-   */
+     *
+     * @param {String} color
+     * @returns {String}
+     */
     color: string;
     /**
      *
