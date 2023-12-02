@@ -154,6 +154,9 @@ class Leaderboard {
   async build() {
     let { background, usersData, colors, scoreMessage, opacity } = this;
 
+    if(!background || !background.type) {
+      throw new Error("You must add a background with addBachground method.");
+    }
     canvas.GlobalFonts.registerFromPath(
       join(__dirname, "..", "assets", "fonts", "Poppins.ttf"),
       "Poppins"
